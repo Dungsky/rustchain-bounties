@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-10-07T22:22:53Z",
+  "updated_at": "2026-10-08T02:21:59Z",
   "repo": "Scottcjn/rustchain-bounties",
-  "total": 668,
+  "total": 666,
   "bounties": [
     {
       "id": 17098,
@@ -157,7 +157,7 @@
       "url": "https://github.com/Scottcjn/rustchain-bounties/issues/16601",
       "state": "open",
       "created_at": "2026-08-25T22:19:40Z",
-      "updated_at": "2026-10-07T12:48:08Z",
+      "updated_at": "2026-10-07T22:50:32Z",
       "comments": 102,
       "author": "Scottcjn",
       "labels": [],
@@ -313,7 +313,7 @@
       "url": "https://github.com/Scottcjn/rustchain-bounties/issues/16497",
       "state": "open",
       "created_at": "2026-08-15T16:52:24Z",
-      "updated_at": "2026-10-07T12:48:12Z",
+      "updated_at": "2026-10-07T22:50:36Z",
       "comments": 78,
       "author": "Scottcjn",
       "labels": [],
@@ -708,7 +708,7 @@
       "url": "https://github.com/Scottcjn/rustchain-bounties/issues/16238",
       "state": "open",
       "created_at": "2026-07-19T21:33:49Z",
-      "updated_at": "2026-10-07T15:55:44Z",
+      "updated_at": "2026-10-07T22:49:15Z",
       "comments": 82,
       "author": "Scottcjn",
       "labels": [
@@ -844,7 +844,7 @@
       "url": "https://github.com/Scottcjn/rustchain-bounties/issues/14481",
       "state": "open",
       "created_at": "2026-06-27T06:19:20Z",
-      "updated_at": "2026-10-07T12:48:16Z",
+      "updated_at": "2026-10-07T22:50:40Z",
       "comments": 11,
       "author": "nkar123412-hub",
       "labels": [],
@@ -2106,7 +2106,7 @@
       "url": "https://github.com/Scottcjn/rustchain-bounties/issues/13949",
       "state": "open",
       "created_at": "2026-06-11T23:02:38Z",
-      "updated_at": "2026-10-07T15:55:38Z",
+      "updated_at": "2026-10-07T22:49:30Z",
       "comments": 119,
       "author": "Scottcjn",
       "labels": [
@@ -3994,30 +3994,6 @@
       "agents_welcome": false
     },
     {
-      "id": 12593,
-      "title": "[ANNOUNCEMENT] RTC Bounty Rate Reduction Schedule — Trigger at 1,000 Holders",
-      "url": "https://github.com/Scottcjn/rustchain-bounties/issues/12593",
-      "state": "open",
-      "created_at": "2026-05-29T19:45:04Z",
-      "updated_at": "2026-06-30T03:09:02Z",
-      "comments": 2,
-      "author": "Scottcjn",
-      "labels": [],
-      "agents_welcome": false
-    },
-    {
-      "id": 12458,
-      "title": "📊 Bounty Rate Reduction Schedule — Rates Scale As RTC Value Appreciates",
-      "url": "https://github.com/Scottcjn/rustchain-bounties/issues/12458",
-      "state": "open",
-      "created_at": "2026-05-28T11:48:29Z",
-      "updated_at": "2026-06-12T15:42:47Z",
-      "comments": 1,
-      "author": "Scottcjn",
-      "labels": [],
-      "agents_welcome": false
-    },
-    {
       "id": 12445,
       "title": "[BOUNTY: 5-8 RTC] CN-Language Market Framing for RustChain (闲置硬件 / e-waste angle)",
       "url": "https://github.com/Scottcjn/rustchain-bounties/issues/12445",
@@ -5331,7 +5307,7 @@
       "url": "https://github.com/Scottcjn/rustchain-bounties/issues/9017",
       "state": "open",
       "created_at": "2026-05-11T16:18:31Z",
-      "updated_at": "2026-10-07T12:46:55Z",
+      "updated_at": "2026-10-07T22:49:17Z",
       "comments": 13,
       "author": "Scottcjn",
       "labels": [
@@ -6158,7 +6134,7 @@
       "url": "https://github.com/Scottcjn/rustchain-bounties/issues/2180",
       "state": "open",
       "created_at": "2026-03-17T02:05:49Z",
-      "updated_at": "2026-10-07T12:48:05Z",
+      "updated_at": "2026-10-07T22:50:29Z",
       "comments": 371,
       "author": "Scottcjn",
       "labels": [
@@ -6214,7 +6190,7 @@
       "url": "https://github.com/Scottcjn/rustchain-bounties/issues/2155",
       "state": "open",
       "created_at": "2026-03-16T18:12:44Z",
-      "updated_at": "2026-10-07T12:47:13Z",
+      "updated_at": "2026-10-07T22:49:34Z",
       "comments": 49,
       "author": "Scottcjn",
       "labels": [
@@ -7878,7 +7854,7 @@
       "url": "https://github.com/Scottcjn/rustchain-bounties/issues/378",
       "state": "open",
       "created_at": "2026-02-20T18:43:46Z",
-      "updated_at": "2026-10-07T12:47:00Z",
+      "updated_at": "2026-10-07T22:49:21Z",
       "comments": 43,
       "author": "Scottcjn",
       "labels": [
@@ -8024,7 +8000,7 @@
       "url": "https://github.com/Scottcjn/rustchain-bounties/issues/282",
       "state": "open",
       "created_at": "2026-02-17T20:14:47Z",
-      "updated_at": "2026-10-07T15:55:41Z",
+      "updated_at": "2026-10-07T22:50:38Z",
       "comments": 72,
       "author": "Scottcjn",
       "labels": [
@@ -8200,7 +8176,7 @@
       "url": "https://github.com/Scottcjn/rustchain-bounties/issues/171",
       "state": "open",
       "created_at": "2026-02-14T21:05:30Z",
-      "updated_at": "2026-10-07T12:46:58Z",
+      "updated_at": "2026-10-07T22:49:20Z",
       "comments": 127,
       "author": "Scottcjn",
       "labels": [
@@ -8215,7 +8191,7 @@
       "url": "https://github.com/Scottcjn/rustchain-bounties/issues/165",
       "state": "open",
       "created_at": "2026-02-14T17:34:51Z",
-      "updated_at": "2026-10-07T12:46:56Z",
+      "updated_at": "2026-10-07T22:49:18Z",
       "comments": 45,
       "author": "sophiaeagent-beep",
       "labels": [
