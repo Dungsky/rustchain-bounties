@@ -44,7 +44,9 @@ Comenta en el problema: **"Me gustaría trabajar en esto"**
 ### 3. Envía tu Trabajo
 - **Becas de código**: Abre un PR al repositorio relevante y enlázalo en el problema
 - **Becas de contenido**: Publica tu contenido y enlázalo en el problema
-- **Becas de estrellas/propagación**: Sigue las instrucciones en el problema
+- **Becas de propagación**: Sigue las instrucciones en el problema
+
+> **Nunca pagamos por estrellas, forks, watches ni follows.** Las Políticas de Uso Aceptable de GitHub lo prohíben; RTC se paga solo por trabajo real y revisado.
 
 ### 4. Recibe tu Pago
 Una vez verificado, los RTC se envían a tu billetera. ¿Es tu primera vez? Nosotros te ayudaremos a configurar una.
@@ -57,7 +59,7 @@ Una vez verificado, los RTC se envían a tu billetera. ¿Es tu primera vez? Noso
 
 | Categoría | Ejemplos | Cantidad |
 |-----------|----------|----------|
-| **Comunidad** | Dar estrellas a repositorios, compartir contenido, reclutar contribuyentes | 30+ |
+| **Comunidad** | Compartir contenido, reclutar contribuyentes, ayudar a los recién llegados | 30+ |
 | **Código** | Corrección de errores, características, integraciones, pruebas | 40+ |
 | **Contenido** | Tutoriales, artículos, videos, documentación | 20+ |
 | **Equipo Rojo** | Auditorías de seguridad, pruebas de penetración, búsqueda de exploits | 6 |
@@ -70,7 +72,6 @@ Una vez verificado, los RTC se envían a tu billetera. ¿Es tu primera vez? Noso
 
 | Beca | Recompensa | Dificultad |
 |------|------------|------------|
-| [RustChain a 500 Estrellas](https://github.com/Scottcjn/rustchain-bounties/issues/553) | 150 RTC | Fácil |
 | [Dual-Mining: Integración Warthog](https://github.com/Scottcjn/rustchain-bounties/issues/550) | 25 RTC | Mayor |
 | [Auditoría de Integridad del Ledger (Equipo Rojo)](https://github.com/Scottcjn/rustchain-bounties/issues/491) | 200 RTC | Crítico |
 | [Ataque al Consenso (Equipo Rojo)](https://github.com/Scottcjn/rustchain-bounties/issues/493) | 200 RTC | Crítico |
@@ -100,7 +101,7 @@ En lugar de recompensar a quienes pueden quemar más electricidad, RustChain pre
 4. **Envía tu Trabajo**:
    - **Para becas de código**: Abre un PR al repositorio relevante y enlázalo en el problema
    - **Para becas de contenido**: Publica tu contenido (artículos, tutoriales, videos, etc.) y enlázalo en el problema
-   - **Para becas de estrellas/propagación**: Sigue las instrucciones específicas en el problema
+   - **Para becas de propagación**: Sigue las instrucciones específicas en el problema
 
 5. **Recibe tu Pago**: Una vez que tu trabajo sea verificado por los mantenedores del proyecto, los RTC se enviarán a tu billetera. is es tu primera vez, te ayudaremos a configurar una billetera.
 

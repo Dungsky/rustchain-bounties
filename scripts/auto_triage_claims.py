@@ -31,13 +31,15 @@ except ImportError:  # pragma: no cover - direct script execution fallback
     from sybil_risk_scorer import extract_links, score_claims
 
 
+# Stars, forks, watches and follows are NEVER a requirement or a reward (GitHub Acceptable Use
+# Policies; Support, 2026-10-09). The star-only bounties (#47, bottube#74, #157, bottube#122) were
+# removed and nothing here checks stargazers.
 DEFAULT_TARGETS = [
     {
         "owner": "Scottcjn",
         "repo": "rustchain-bounties",
         "issue": 87,
         "min_account_age_days": 30,
-        "required_stars": ["Rustchain", "bottube"],
         "require_wallet": True,
         "require_bottube_username": False,
         "require_proof_link": False,
@@ -45,35 +47,9 @@ DEFAULT_TARGETS = [
     },
     {
         "owner": "Scottcjn",
-        "repo": "Rustchain",
-        "issue": 47,
-        "min_account_age_days": 30,
-        "required_stars": ["Rustchain"],
-        # Bounty allows either a RustChain wallet name OR a BoTTube username.
-        # Treat either as a valid payout target.
-        "require_wallet": False,
-        "require_bottube_username": False,
-        "require_payout_target": True,
-        "require_proof_link": False,
-        "name": "Rustchain Star",
-    },
-    {
-        "owner": "Scottcjn",
-        "repo": "bottube",
-        "issue": 74,
-        "min_account_age_days": 30,
-        "required_stars": ["bottube"],
-        "require_wallet": False,
-        "require_bottube_username": True,
-        "require_proof_link": False,
-        "name": "BoTTube Star+Join",
-    },
-    {
-        "owner": "Scottcjn",
         "repo": "rustchain-bounties",
         "issue": 103,
         "min_account_age_days": 30,
-        "required_stars": [],
         "require_wallet": True,
         "require_bottube_username": True,
         "require_proof_link": True,
@@ -82,35 +58,12 @@ DEFAULT_TARGETS = [
     {
         "owner": "Scottcjn",
         "repo": "rustchain-bounties",
-        "issue": 157,
-        "min_account_age_days": 30,
-        "required_stars": ["beacon-skill"],
-        "require_wallet": True,
-        "require_bottube_username": False,
-        "require_proof_link": True,
-        "name": "Beacon Star + Share",
-    },
-    {
-        "owner": "Scottcjn",
-        "repo": "rustchain-bounties",
         "issue": 158,
         "min_account_age_days": 30,
-        "required_stars": [],
         "require_wallet": True,
         "require_bottube_username": False,
         "require_proof_link": True,
         "name": "Beacon Integration",
-    },
-    {
-        "owner": "Scottcjn",
-        "repo": "bottube",
-        "issue": 122,
-        "min_account_age_days": 30,
-        "required_stars": ["bottube"],
-        "require_wallet": True,
-        "require_bottube_username": False,
-        "require_proof_link": True,
-        "name": "BoTTube Star + Share Why",
     },
 ]
 
@@ -262,7 +215,6 @@ def _looks_like_claim(body: str) -> bool:
     text = body.lower()
     tokens = [
         "claim",
-        "starred",
         "wallet",
         "proof",
         "bounty",
@@ -412,62 +364,8 @@ def _is_dry_run() -> bool:
     return os.environ.get("DRY_RUN", "").strip().lower() in {"1", "true", "yes"}
 
 
-def _fetch_star_cache(
-    repos: List[str],
-    token: str,
-    star_token: Optional[str] = None,
-) -> tuple[Dict[str, Set[str]], Dict[str, str]]:
-    """Fetch stargazer logins for each repo.
-
-    The GitHub REST "List stargazers" endpoint returns HTTP 403
-    ("Resource not accessible by integration") for the default Actions
-    GITHUB_TOKEN when the target repo is not the one the workflow is
-    running in -- this is true even for public repos, because the
-    Actions installation token is scoped only to its own repository.
-    Regular issue/comment reads across public repos are not affected,
-    only this social-graph-style endpoint.
-
-    Because of that, cross-repo star checks can legitimately be
-    unavailable at runtime. Rather than let that crash the whole triage
-    run (which previously took down every bounty target, not just the
-    ones that need a star check), record the failure per-repo and let
-    the caller degrade to a "can't verify" blocker instead of a hard
-    exit.
-
-    An optional `star_token` (e.g. a fine-grained PAT with public read
-    access, wired up via the STAR_CHECK_TOKEN secret) can be supplied to
-    restore real cross-repo star verification; it is tried first and
-    falls back to `token` only if unset.
-    """
-    cache: Dict[str, Set[str]] = {}
-    errors: Dict[str, str] = {}
-    effective_token = star_token or token
-    for repo in sorted(repos):
-        try:
-            users = _gh_paginated(f"/repos/Scottcjn/{repo}/stargazers", effective_token)
-            cache[repo] = {u.get("login") for u in users if u.get("login")}
-        except urllib.error.HTTPError as exc:
-            print(
-                f"WARN: could not fetch stargazers for Scottcjn/{repo}: "
-                f"HTTP {exc.code} {exc.reason}. Star checks for this repo "
-                "will be marked as unavailable instead of failing the run.",
-                file=sys.stderr,
-            )
-            cache[repo] = set()
-            errors[repo] = f"HTTP {exc.code}"
-        except urllib.error.URLError as exc:
-            print(
-                f"WARN: could not fetch stargazers for Scottcjn/{repo}: {exc}",
-                file=sys.stderr,
-            )
-            cache[repo] = set()
-            errors[repo] = str(exc.reason)
-    return cache, errors
-
-
 def main() -> int:
     token = _env("GITHUB_TOKEN")
-    star_token = os.environ.get("STAR_CHECK_TOKEN", "").strip() or None
     since_hours = int(_env("SINCE_HOURS", "72"))
     risk_policy = _env("TRIAGE_RISK_POLICY", "balanced")
     dry_run = _is_dry_run()
@@ -478,15 +376,10 @@ def main() -> int:
     else:
         targets = DEFAULT_TARGETS
 
-    # Build star cache only for repos we need.
-    required_star_repos: Set[str] = set()
     for t in targets:
-        for repo in t.get("required_stars", []):
-            required_star_repos.add(repo)
-
-    star_cache, star_fetch_errors = _fetch_star_cache(
-        sorted(required_star_repos), token, star_token
-    )
+        if t.get("required_stars"):
+            print(f"WARN: ignoring required_stars on {t.get('repo')}#{t.get('issue')}: "
+                  "stars are never a bounty requirement", file=sys.stderr)
 
     user_cache: Dict[str, Dict[str, Any]] = {}
     cutoff = _now_utc() - timedelta(hours=since_hours)
@@ -501,7 +394,6 @@ def main() -> int:
         req_bt = bool(target.get("require_bottube_username", False))
         req_payout_target = bool(target.get("require_payout_target", False))
         req_proof = bool(target.get("require_proof_link", False))
-        req_stars = list(target.get("required_stars", []))
 
         issue_ref = f"{owner}/{repo}#{issue}"
         try:
@@ -592,15 +484,6 @@ def main() -> int:
             if req_proof and not _has_proof_link(merged_body):
                 blockers.append("missing_proof_link")
 
-            for star_repo in req_stars:
-                if star_repo in star_fetch_errors:
-                    # We couldn't verify stars for this repo at all (e.g. the
-                    # cross-repo stargazers API rejected our token). Stay
-                    # fail-safe: never treat "unknown" as "eligible".
-                    blockers.append(f"star_check_unavailable:{star_repo}")
-                elif user not in star_cache.get(star_repo, set()):
-                    blockers.append(f"missing_star:{star_repo}")
-
             rows.append(
                 ClaimResult(
                     claim_id=info["latest_url"] or f"{issue_ref}:{user}:{info['latest_created']}",
@@ -623,13 +506,6 @@ def main() -> int:
 
     generated_at = _now_utc().isoformat().replace("+00:00", "Z")
     report = _build_report_md(generated_at, results_by_issue, since_hours, risk_policy)
-    if star_fetch_errors:
-        note = "; ".join(f"{repo} ({err})" for repo, err in sorted(star_fetch_errors.items()))
-        report = (
-            f"> WARN: star verification unavailable for: {note}. "
-            f"Affected claims are flagged `star_check_unavailable:<repo>` and "
-            f"left in `needs-action`, not auto-approved.\n\n{report}"
-        )
     print(report)
 
     ledger_repo = os.environ.get("LEDGER_REPO", "").strip()

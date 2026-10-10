@@ -2,16 +2,17 @@
 """
 RustChain Bounty Verification Bot
 
-Auto-verifies star/badge/follow/emoji claims on rustchain-bounties issues.
+Auto-verifies badge/emoji/distribution claims on rustchain-bounties issues.
 Runs as a GitHub Action every 6 hours, or manually via workflow_dispatch.
 
 Checks:
-  1. Star claims   - Did the user star the specified repos?
-  2. Badge claims   - Does the user's profile README mention RustChain/Elyan?
-  3. Follow claims  - Does the user follow Scottcjn?
-  4. Emoji claims   - Did the user react to the specified issue?
-  5. Distribution   - Does the `Live-URL:` a claimant posted actually exist
+  1. Badge claims   - Does the user's profile README mention RustChain/Elyan?
+  2. Emoji claims   - Did the user react to the specified issue?
+  3. Distribution   - Does the `Live-URL:` a claimant posted actually exist
                       off GitHub (BoTTube / X / YouTube / article host)?
+
+Stars, forks, watches and follows are NEVER rewarded (GitHub Acceptable Use
+Policies; Support, 2026-10-09): there is no star or follow phase.
 
 Posts a verification comment on the bounty issue with results.
 """
@@ -41,44 +42,15 @@ GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 if not GITHUB_TOKEN:
     sys.exit("GITHUB_TOKEN environment variable is required")
 
-# Token used for the stargazer sweep. The Actions-issued GITHUB_TOKEN is a
-# GitHub App installation token, and GET /repos/{owner}/{repo}/stargazers
-# answers every such token with 403 "Resource not accessible by integration"
-# -- even for the workflow's own public repo. Every scheduled run since at
-# least 2026-08-19 logged that 403 for all 13 STAR_REPOS and (until the
-# fail-closed fix) reported "0 stargazers" as a green run. A user PAT
-# (classic `public_repo`, or fine-grained with Metadata: read) can list
-# stargazers, so the workflow passes one here; issue comments stay on
-# GITHUB_TOKEN so they are still authored by github-actions[bot].
-STAR_READ_TOKEN = os.environ.get("STAR_READ_TOKEN", "") or GITHUB_TOKEN
-
 OWNER = "Scottcjn"
 BOUNTY_REPO = "rustchain-bounties"
 
-# Repos we track stars on (case-sensitive as they appear on GitHub)
-STAR_REPOS = [
-    "Rustchain",
-    "bottube",
-    "rustchain-bounties",
-    "beacon-skill",
-    "grazer-skill",
-    "ram-coffers",
-    "llama-cpp-power8",   # was "llama-power8" (404: repo is named llama-cpp-power8)
-    "rust-ppc-tiger",
-    "rustchain-mcp",
-    "shaprai",
-    "beacon-skill-rs",    # was "beacon-rs" (404: repo is named beacon-skill-rs)
-    "trashclaw",
-    # "elyan-site" removed: the site repos (elyan-labs-site, elyanlabs-ai-site) are private
-    # and cannot be starred, so a sweep over them can never succeed.
-]
-
 # Issue numbers by bounty type
+# NEVER stars, forks, watches or follows: GitHub's Acceptable Use Policies forbid rewarding them
+# (Support, 2026-10-09). The star and follow phases were removed for that reason.
 # Only OPEN bounty issues belong here: the phases skip closed issues, so a list of
 # closed numbers makes the sweep succeed while checking nobody (2026-08-28).
-STAR_BOUNTY_ISSUES = [16238, 9017, 165, 171, 378]   # star 3 repos / May Flowers / ClawHub / pick-one / BoTTube
 BADGE_BOUNTY_ISSUES = [13949]                        # RustChain badge in any README
-FOLLOW_BOUNTY_ISSUES = [2155]                        # (2173 closed)
 EMOJI_BOUNTY_ISSUES = [2180]                         # (1611 closed)
 # Distribution / human-funnel bounties: the deliverable lives OFF GitHub, and the
 # 2026-08-28 audit found ~45 claims on these that never left GitHub. A claim counts
@@ -129,7 +101,6 @@ def _make_session(token: str) -> requests.Session:
 
 
 SESSION = _make_session(GITHUB_TOKEN)          # issue reads + comment writes
-STAR_SESSION = _make_session(STAR_READ_TOKEN)  # stargazer sweep only
 
 
 def gh_get(url: str, params: dict | None = None,
@@ -197,36 +168,6 @@ def paginate_all(url: str, params: dict | None = None,
 # Verification functions
 # ---------------------------------------------------------------------------
 
-def get_stargazers(repo: str) -> set[str]:
-    """Return set of usernames who starred OWNER/repo.
-
-    Raises `IncompleteSweep` if the stargazer list could not be read in full
-    (including a 404, which would otherwise silently turn a renamed or moved
-    repo into "nobody starred it").
-    """
-    try:
-        users = paginate_all(f"https://api.github.com/repos/{OWNER}/{repo}/stargazers",
-                             session=STAR_SESSION)
-    except IncompleteSweep as e:
-        raise IncompleteSweep(f"stargazers for {OWNER}/{repo}: {e}") from e
-    return {u["login"] for u in users if isinstance(u, dict) and "login" in u}
-
-
-def get_all_stargazers() -> dict[str, set[str]]:
-    """Return {repo: set(usernames)} for all tracked repos.
-
-    All-or-nothing on purpose. A partial map here becomes a public "you did
-    not star this" verdict on someone's claim, so if any repo cannot be read
-    in full the whole star phase is abandoned rather than reported.
-    """
-    result = {}
-    for repo in STAR_REPOS:
-        log.info("Fetching stargazers for %s/%s ...", OWNER, repo)
-        result[repo] = get_stargazers(repo)
-        log.info("  -> %d stargazers", len(result[repo]))
-    return result
-
-
 def check_profile_badge(username: str) -> tuple[Optional[bool], str]:
     """Check if user's profile README mentions RustChain/Elyan.
 
@@ -251,22 +192,6 @@ def check_profile_badge(username: str) -> tuple[Optional[bool], str]:
     if found_keywords:
         return True, f"Found keywords: {', '.join(found_keywords)}"
     return False, "No RustChain/Elyan keywords found in profile README"
-
-
-def check_follows_owner(username: str) -> Optional[bool]:
-    """Check if username follows OWNER.
-
-    204 = follows, 404 = does not follow (an authoritative answer from
-    GitHub). Anything else means the check did not happen — return None
-    rather than reporting the claimant as NOT FOLLOWING off a rate-limit.
-    """
-    r = gh_get(f"https://api.github.com/users/{username}/following/{OWNER}")
-    if r.status_code == 204:
-        return True
-    if r.status_code == 404:
-        return False
-    log.warning("Follow check for %s inconclusive: HTTP %d", username, r.status_code)
-    return None
 
 
 def get_issue_reactions(issue_number: int) -> dict[str, set[str]]:
@@ -389,65 +314,6 @@ def find_existing_bot_comment(comments: list[dict]) -> Optional[int]:
 # Verification runners
 # ---------------------------------------------------------------------------
 
-def verify_star_claims(issue_number: int, all_stars: dict[str, set[str]]) -> None:
-    """Verify star claims on a bounty issue."""
-    log.info("=== Verifying star claims on issue #%d ===", issue_number)
-
-    comments = get_issue_comments(issue_number)
-    claimants = extract_claimants(comments, issue_number)
-    existing_comment = find_existing_bot_comment(comments)
-
-    if not claimants:
-        log.info("No claimants found on #%d, skipping", issue_number)
-        return
-
-    lines = [
-        BOT_SIGNATURE,
-        f"## Star Verification Report",
-        f"*{BOT_TAG} - {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}*",
-        "",
-        f"Checked **{len(claimants)}** claim(s) against **{len(STAR_REPOS)}** repos.",
-        "",
-        "| User | Stars | Repos Starred | Status |",
-        "|------|-------|---------------|--------|",
-    ]
-
-    for cl in claimants:
-        username = cl["username"]
-        starred_repos = []
-        for repo in STAR_REPOS:
-            if username in all_stars.get(repo, set()):
-                starred_repos.append(repo)
-
-        count = len(starred_repos)
-        repo_list = ", ".join(starred_repos[:5])
-        if len(starred_repos) > 5:
-            repo_list += f" +{len(starred_repos) - 5} more"
-
-        if count == 0:
-            status = "No stars found"
-        elif count < 3:
-            status = f"Partial ({count} stars)"
-        else:
-            status = f"VERIFIED ({count} stars)"
-
-        lines.append(f"| @{username} | {count}/{len(STAR_REPOS)} | {repo_list or 'None'} | {status} |")
-
-    lines.extend([
-        "",
-        "---",
-        f"*Repos checked: {', '.join(STAR_REPOS)}*",
-        "*Stars can take a few minutes to propagate. Re-run if you just starred.*",
-    ])
-
-    body = "\n".join(lines)
-
-    if existing_comment:
-        update_comment(existing_comment, body)
-    else:
-        post_comment(issue_number, body)
-
-
 def verify_badge_claims(issue_number: int) -> None:
     """Verify profile badge claims on a bounty issue."""
     log.info("=== Verifying badge claims on issue #%d ===", issue_number)
@@ -488,54 +354,6 @@ def verify_badge_claims(issue_number: int) -> None:
         "---",
         f"*Keywords checked: {', '.join(BADGE_KEYWORDS)}*",
         "*Add a RustChain badge/mention to your GitHub profile README to claim.*",
-    ])
-
-    body = "\n".join(lines)
-
-    if existing_comment:
-        update_comment(existing_comment, body)
-    else:
-        post_comment(issue_number, body)
-
-
-def verify_follow_claims(issue_number: int) -> None:
-    """Verify follow claims on a bounty issue."""
-    log.info("=== Verifying follow claims on issue #%d ===", issue_number)
-
-    comments = get_issue_comments(issue_number)
-    claimants = extract_claimants(comments, issue_number)
-    existing_comment = find_existing_bot_comment(comments)
-
-    if not claimants:
-        log.info("No claimants found on #%d, skipping", issue_number)
-        return
-
-    lines = [
-        BOT_SIGNATURE,
-        f"## Follow Verification Report",
-        f"*{BOT_TAG} - {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}*",
-        "",
-        f"Checked **{len(claimants)}** claim(s) for following @{OWNER}.",
-        "",
-        "| User | Follows @{} | Status |".format(OWNER),
-        "|------|-------------|--------|",
-    ]
-
-    for cl in claimants:
-        username = cl["username"]
-        follows = check_follows_owner(username)
-        if follows is None:
-            status, cell = "NOT CHECKED (retrying next run)", "?"
-        elif follows:
-            status, cell = "VERIFIED", "Yes"
-        else:
-            status, cell = "NOT FOLLOWING", "No"
-        lines.append(f"| @{username} | {cell} | {status} |")
-
-    lines.extend([
-        "",
-        "---",
-        f"*Follow [@{OWNER}](https://github.com/{OWNER}) to claim this bounty.*",
     ])
 
     body = "\n".join(lines)
@@ -864,35 +682,9 @@ def main() -> int:
     log.info("=" * 60)
 
     failures: list[str] = []
-
-    # Pre-fetch all stargazers once (most expensive operation).
-    #
-    # If this cannot complete, the ENTIRE star phase is skipped. Running it
-    # on a partial map is how honest contributors got publicly told they had
-    # not starred; a missing report is recoverable, a false accusation is not.
-    log.info("--- Phase 1: Fetching stargazers ---")
-    all_stars: dict[str, set[str]] | None = None
-    try:
-        all_stars = get_all_stargazers()
-    except IncompleteSweep as e:
-        log.error("Stargazer sweep INCOMPLETE — skipping all star bounties: %s", e)
-        failures.append(f"stargazer sweep: {e}")
-    else:
-        total_unique = len(set().union(*all_stars.values())) if all_stars else 0
-        log.info("Total unique stargazers across %d repos: %d", len(STAR_REPOS), total_unique)
-
-    if all_stars is not None:
-        failures += run_phase(
-            "Phase 2: Star bounties", STAR_BOUNTY_ISSUES,
-            lambda issue: verify_star_claims(issue, all_stars),
-        )
-    else:
-        log.warning("Phase 2: Star bounties SKIPPED (no trustworthy stargazer data)")
-
-    failures += run_phase("Phase 3: Badge bounties", BADGE_BOUNTY_ISSUES, verify_badge_claims)
-    failures += run_phase("Phase 4: Follow bounties", FOLLOW_BOUNTY_ISSUES, verify_follow_claims)
-    failures += run_phase("Phase 5: Emoji bounties", EMOJI_BOUNTY_ISSUES, verify_emoji_claims)
-    failures += run_phase("Phase 6: Distribution bounties (Live-URL)",
+    failures += run_phase("Phase 1: Badge bounties", BADGE_BOUNTY_ISSUES, verify_badge_claims)
+    failures += run_phase("Phase 2: Emoji bounties", EMOJI_BOUNTY_ISSUES, verify_emoji_claims)
+    failures += run_phase("Phase 3: Distribution bounties (Live-URL)",
                           DISTRIBUTION_BOUNTY_ISSUES, verify_distribution_claims)
 
     log.info("=" * 60)
