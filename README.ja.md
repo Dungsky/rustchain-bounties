@@ -43,7 +43,9 @@ Issue にコメント: **"I would like to work on this"**
 ### 3. 成果を提出する
 - **コードバウンティ**: 関連リポジトリに PR を作成し、Issue にリンクする
 - **コンテンツバウンティ**: コンテンツを公開し、Issue にリンクする
-- **スター/プロパゲーションバウンティ**: Issue の指示に従う
+- **プロパゲーションバウンティ**: Issue の指示に従う
+
+> **スター、フォーク、ウォッチ、フォローに報酬を支払うことはありません。** GitHub の利用規約（Acceptable Use Policies）で禁止されています。RTC は実際にレビューされた作業にのみ支払われます。
 
 ### 4. 報酬を受け取る
 検証後、RTC がウォレットに送金されます。初めてですか？セットアップをお手伝いします。
@@ -54,7 +56,7 @@ Issue にコメント: **"I would like to work on this"**
 
 | カテゴリ | 例 | 数 |
 |----------|---------|-------|
-| **コミュニティ** | リポジトリのスター、コンテンツ共有、コントリビューター募集 | 30+ |
+| **コミュニティ** | コンテンツ共有、コントリビューター募集、新規参加者のサポート | 30+ |
 | **コード** | バグ修正、機能追加、インテグレーション、テスト | 40+ |
 | **コンテンツ** | チュートリアル、記事、動画、ドキュメント | 20+ |
 | **レッドチーム** | セキュリティ監査、ペネトレーションテスト、エクスプロイト発見 | 6 |
@@ -65,7 +67,6 @@ Issue にコメント: **"I would like to work on this"**
 
 | バウンティ | 報酬 | 難易度 |
 |--------|--------|-----------|
-| [RustChain to 500 Stars](https://github.com/Scottcjn/rustchain-bounties/issues/553) | 150 RTC プール | 簡単 |
 | [Dual-Mining: Warthog Integration](https://github.com/Scottcjn/rustchain-bounties/issues/550) | 25 RTC | メジャー |
 | [Ledger Integrity Red Team](https://github.com/Scottcjn/rustchain-bounties/issues/491) | 200 RTC | クリティカル |
 | [Consensus Attack Red Team](https://github.com/Scottcjn/rustchain-bounties/issues/493) | 200 RTC | クリティカル |

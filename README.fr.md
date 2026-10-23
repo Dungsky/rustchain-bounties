@@ -45,6 +45,8 @@ Commentez sur l'élément: **"Je souhaite travailler sur celle-ci"**
 - **Récompenses de contenu**: Publiez votre contenu et liez-le dans l'élément
 - **Récompenses de propagation**: Suivez les instructions dans l'élément
 
+> **Nous ne payons jamais pour des étoiles, forks, watches ou follows.** Les politiques d'utilisation acceptable de GitHub l'interdisent ; le RTC rémunère uniquement un travail réel et vérifié.
+
 ### 4. Être Payé
 Une fois vérifié, les RTC sont envoyés à votre portefeuille. Première fois ? Nous vous aiderons à en configurer un.
 
@@ -54,7 +56,7 @@ Une fois vérifié, les RTC sont envoyés à votre portefeuille. Première fois 
 
 | Catégorie         | Exemples                          | Nombre |
 |-------------------|-----------------------------------|--------|
-| **Communauté**    | Étoiler les dépôts, partager du contenu, recruter des contributeurs | 30+    |
+| **Communauté**    | Partager du contenu, recruter des contributeurs, aider les nouveaux | 30+    |
 | **Code**          | Corrections de bugs, fonctionnalités, intégrations, tests | 40+    |
 | **Contenu**       | Tutoriels, articles, vidéos, documentation | 20+    |
 | **Équipe Rouge**  | Audits de sécurité, tests de pénétration, recherche d'exploits | 6      |
@@ -65,7 +67,6 @@ Une fois vérifié, les RTC sont envoyés à votre portefeuille. Première fois 
 
 | Récompense                          | Récompense | Difficulté |
 |-------------------------------------|------------|------------|
-| [RustChain à 500 Étoiles](https://github.com/Scottcjn/rustchain-bounties/issues/553) | 150 RTC pool | Facile |
 | [Dual-Mining: Intégration Warthog](https://github.com/Scottcjn/rustchain-bounties/issues/550) | 25 RTC | Important |
 | [Red Team Intégrité Ledger](https://github.com/Scottcjn/rustchain-bounties/issues/491) | 200 RTC | Critique |
 | [Red Team Attaque Consensus](https://github.com/Scottcjn/rustchain-bounties/issues/493) | 200 RTC | Critique |

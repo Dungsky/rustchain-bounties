@@ -92,30 +92,31 @@ class PaginateAllPropagatesFailure(unittest.TestCase):
         self.assertEqual(len(got), 107)
 
 
-class StargazerSweepIsAllOrNothing(unittest.TestCase):
-    def test_one_bad_repo_aborts_the_whole_map(self):
+class NoStarForkWatchOrFollowRewards(unittest.TestCase):
+    """GitHub's Acceptable Use Policies forbid rewarding stars, forks, watches or
+    follows (Support, 2026-10-09). The bot must not even be able to verify them."""
+
+    def test_star_and_follow_phases_are_gone(self):
         mod = load_verify_bounties()
-        install_pages(mod, [
-            FakeResponse(200, full_page("a_", n=3)),   # first repo OK
-            FakeResponse(403, text="secondary rate limit"),
-        ])
+        for name in ("STAR_REPOS", "STAR_BOUNTY_ISSUES", "FOLLOW_BOUNTY_ISSUES", "get_stargazers",
+                     "get_all_stargazers", "verify_star_claims", "check_follows_owner", "verify_follow_claims"):
+            self.assertFalse(hasattr(mod, name), name)
 
-        with self.assertRaises(mod.IncompleteSweep) as ctx:
-            mod.get_all_stargazers()
-
-        # The message must name the repo that failed, or the log is useless.
-        self.assertIn("stargazers for", str(ctx.exception))
+    def test_no_bounty_issue_list_names_a_metric_bounty(self):
+        src = (Path(__file__).resolve().parents[1] / "scripts" / "verify_bounties.py").read_text()
+        self.assertNotIn("/stargazers", src)
+        self.assertNotIn("/following/", src)
 
 
 class NoVerdictOnIncompleteData(unittest.TestCase):
-    def test_star_report_is_not_posted_when_comments_cannot_be_read(self):
+    def test_badge_report_is_not_posted_when_comments_cannot_be_read(self):
         mod = load_verify_bounties()
         install_pages(mod, [FakeResponse(403, text="secondary rate limit")])
 
         with patch.object(mod, "post_comment") as post, \
              patch.object(mod, "update_comment") as update:
             with self.assertRaises(mod.IncompleteSweep):
-                mod.verify_star_claims(2175, {"Rustchain": {"alice"}})
+                mod.verify_badge_claims(13949)
 
         post.assert_not_called()
         update.assert_not_called()
@@ -134,18 +135,6 @@ class NoVerdictOnIncompleteData(unittest.TestCase):
 
 
 class InconclusiveChecksAreNotAccusations(unittest.TestCase):
-    def test_follow_check_returns_none_on_rate_limit(self):
-        mod = load_verify_bounties()
-        mod.gh_get = lambda url, params=None: FakeResponse(403)
-        self.assertIsNone(mod.check_follows_owner("alice"))
-
-    def test_follow_check_still_answers_204_and_404(self):
-        mod = load_verify_bounties()
-        mod.gh_get = lambda url, params=None: FakeResponse(204)
-        self.assertIs(mod.check_follows_owner("alice"), True)
-        mod.gh_get = lambda url, params=None: FakeResponse(404)
-        self.assertIs(mod.check_follows_owner("alice"), False)
-
     def test_badge_check_distinguishes_missing_from_unreadable(self):
         mod = load_verify_bounties()
 

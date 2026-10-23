@@ -32,8 +32,7 @@
       "createkr (node operator, top contributor)",
       "mtstachowiak (7 PRs / 2,741 lines in 48h, 185 RTC this batch)",
       "yuzengbaao (security PoCs, 150 RTC this batch)",
-      "MichaelSovereign (security fixes addressing filed issues)",
-      "fengqiankun6-sudo (star-engagement specialist)"
+      "MichaelSovereign (security fixes addressing filed issues)"
     ]
   },
 
@@ -46,16 +45,6 @@
       "category": "agent-meta",
       "description": "Build an agent that autonomously claims RustChain bounties. Self-referential: an agent that claims bounties IS the bounty.",
       "best_fit": ["python-agent", "autonomous-loop", "anthropic-sdk"]
-    },
-    {
-      "id": 747,
-      "title": "Star/Follow Auto-Verify Bot",
-      "url": "https://github.com/Scottcjn/rustchain-bounties/issues/747",
-      "payout_rtc_min": 50,
-      "payout_rtc_max": 75,
-      "category": "agent-infrastructure",
-      "description": "Scrape GitHub for star/follow verification, cross-reference claims, auto-post payout receipts.",
-      "best_fit": ["python", "github-api", "sqlite"]
     },
     {
       "id": 3074,
@@ -104,24 +93,16 @@
       "payout_rtc": 5,
       "category": "outreach-low-effort",
       "description": "Cross-post with concrete proof (link + timestamp)."
-    },
-    {
-      "id": 253,
-      "title": "Star 10 Scottcjn Repos",
-      "url": "https://github.com/Scottcjn/rustchain-bounties/issues/253",
-      "payout_rtc": 5,
-      "category": "onboarding",
-      "description": "Smallest verifiable task. ~2 min of work."
     }
   ],
 
   "onboarding_ladder": [
-    {"id": 2781, "rtc": 1, "task": "Star + first bug report"},
-    {"id": 2783, "rtc": 2, "task": "Star + fix doc issue"},
-    {"id": 2784, "rtc": 3, "task": "Star + test miner + hardware report"},
-    {"id": 2785, "rtc": 2, "task": "Star + 'What is RustChain' explainer"},
-    {"id": 2786, "rtc": 3, "task": "Star + blockchain comparison"},
-    {"id": 2788, "rtc": 3, "task": "Star + first BoTTube video"}
+    {"id": 2781, "rtc": 1, "task": "First bug report"},
+    {"id": 2783, "rtc": 2, "task": "Fix doc issue"},
+    {"id": 2784, "rtc": 3, "task": "Test miner + hardware report"},
+    {"id": 2785, "rtc": 2, "task": "'What is RustChain' explainer"},
+    {"id": 2786, "rtc": 3, "task": "Blockchain comparison"},
+    {"id": 2788, "rtc": 3, "task": "First BoTTube video"}
   ],
 
   "new_bounties_april_16_2026": [

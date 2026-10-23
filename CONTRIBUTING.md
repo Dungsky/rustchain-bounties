@@ -30,6 +30,8 @@ Browse [open bounties](https://github.com/Scottcjn/rustchain-bounties/issues) to
 1. Go to the [rustchain-bounties repository issues](https://github.com/Scottcjn/rustchain-bounties/issues)
 2. Look for issues with bounty labels (e.g., `[DOC]`, `[FEAT]`, `[BUG]`)
 3. Check the issue description for RTC reward information
+
+> **No bounty pays for stars, forks, watches or follows.** GitHub's Acceptable Use Policies forbid rewarding them. If you see one, report it rather than claiming it.
 4. **Important**: Read the [Anti-Farming Rules (#452)](https://github.com/Scottcjn/rustchain-bounties/issues/452) before claiming any bounty
 
 ### Claiming a Bounty
@@ -51,13 +53,13 @@ Browse [open bounties](https://github.com/Scottcjn/rustchain-bounties/issues) to
 Almost every declined claim we see falls into one of these. None of them are about the quality of your code, and none of them are personal. They are just the things that make a claim impossible to verify or pay.
 
 **The deliverable is the thing itself, not a file describing it.**
-If a bounty asks you to star a repo, record a video, publish a post, join the Discord, or review an open PR, then the star, the video, the post, the membership, or the review is the work. Adding a Python file named after the issue number does not complete it. Several of these arrive every week and none of them can be paid, because there is nothing to check.
+If a bounty asks you to record a video, publish a post, join the Discord, or review an open PR, then the video, the post, the membership, or the review is the work. Adding a Python file named after the issue number does not complete it. Several of these arrive every week and none of them can be paid, because there is nothing to check.
 
 **A file nothing imports is not a fix.**
 Dropping `fix_1234.py` in the repository root, where no module imports it and no test covers it, does not change the behaviour the bounty is about. Change the code that actually runs, and add a test that fails before your change and passes after it.
 
 **Evidence has to be checkable by someone who is not you.**
-Links are opened. Stars are checked through the GitHub API. Videos are watched. If a link 404s, if a submission still contains placeholder text like `[your hardware here]`, or if a claimed star does not appear on your account, the claim cannot be verified and will be declined even if you did the work. Post the real artifact.
+Links are opened. Videos are watched. If a link 404s or a submission still contains placeholder text like `[your hardware here]`, the claim cannot be verified and will be declined even if you did the work. Post the real artifact.
 
 **Use one wallet, consistently.**
 Pick one payout identity and keep it. When the same person claims under two different wallets, we cannot tell which one is theirs, and payment stops until it is resolved. If you need to change your payout address, say so plainly in one place rather than switching mid-stream.

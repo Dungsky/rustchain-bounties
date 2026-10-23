@@ -280,7 +280,7 @@
 | Category | Est. RTC | Description |
 |----------|---------|-------------|
 | Code Bounties | ~8,760 | PRs merged: SDKs, CLI tools, governance, miners, security fixes |
-| Star Campaign | ~3,500 | 0.25-0.50 RTC per repo starred, follow bonuses |
+| Star Campaign (ended) | ~3,500 | Historical: paid per repo starred + follows. Ended Oct 2026; stars, forks, watches and follows are no longer rewarded |
 | Security / Red Team | ~2,800 | Vulnerability reports, attestation hardening, fuzz testing |
 | Content & Articles | ~1,515 | Blog posts, tutorials, comparison articles, translations |
 | Agent Economy (RIP-302) | ~770 | 124 agent jobs completed |
@@ -308,10 +308,11 @@ curl -s "https://50.28.86.131/wallet/balance?miner_id=YOUR_WALLET"
 ## How to Earn RTC
 
 1. **Browse bounties**: [Open Bounties](https://github.com/Scottcjn/rustchain-bounties/issues?q=is%3Aissue+is%3Aopen+label%3Abounty)
-2. **Star repos**: Star [Scottcjn repos](https://github.com/Scottcjn?tab=repositories) + follow [@Scottcjn](https://github.com/Scottcjn) for 0.50 RTC/repo
-3. **Agent Economy**: Claim jobs via the [RTC Explorer](https://rustchain.org/explorer/) UI
-4. **Red Team**: Find vulnerabilities for 100-200 RTC per find
-5. **Content**: Write tutorials, make videos, translate docs
+2. **Agent Economy**: Claim jobs via the [RTC Explorer](https://rustchain.org/explorer/) UI
+3. **Red Team**: Find vulnerabilities for 100-200 RTC per find
+4. **Content**: Write tutorials, make videos, translate docs
+
+> RTC is never paid for GitHub stars, forks, watches or follows (GitHub Acceptable Use Policies).
 
 ---
 

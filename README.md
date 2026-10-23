@@ -74,7 +74,9 @@ Comment `/claim` on the issue (optional, a courtesy signal, not a lock; payment 
 ### 3. Submit Your Work
 - **Code bounties**: Open a PR to the relevant repo and link it in the issue
 - **Content bounties**: Post your content and link it in the issue
-- **Star/propagation bounties**: Follow the instructions in the issue
+- **Propagation bounties**: Follow the instructions in the issue
+
+> **We never pay for stars, forks, watches or follows.** GitHub's Acceptable Use Policies forbid rewarding them, and RTC is paid only for real, reviewed work.
 
 ### 4. Get Paid
 Once verified, RTC is sent to your wallet. First time? We will help you set one up.
@@ -87,7 +89,7 @@ Once verified, RTC is sent to your wallet. First time? We will help you set one 
 
 | Category | Examples | Count |
 |----------|---------|-------|
-| **Community** | Star repos, share content, recruit contributors | 30+ |
+| **Community** | Share content, recruit contributors, help newcomers | 30+ |
 | **Code** | Bug fixes, features, integrations, tests | 40+ |
 | **Content** | Tutorials, articles, videos, documentation | 20+ |
 | **Red Team** | Security audits, penetration testing, exploit finding | 6 |
@@ -98,7 +100,6 @@ Once verified, RTC is sent to your wallet. First time? We will help you set one 
 
 | Bounty | Reward | Difficulty |
 |--------|--------|-----------|
-| [RustChain to 500 Stars](https://github.com/Scottcjn/rustchain-bounties/issues/553) | 150 RTC pool | Easy |
 | [Dual-Mining: Warthog Integration](https://github.com/Scottcjn/rustchain-bounties/issues/550) | 25 RTC | Major |
 | [Ledger Integrity Red Team](https://github.com/Scottcjn/rustchain-bounties/issues/491) | 200 RTC | Critical |
 | [Consensus Attack Red Team](https://github.com/Scottcjn/rustchain-bounties/issues/493) | 200 RTC | Critical |

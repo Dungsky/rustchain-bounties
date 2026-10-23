@@ -23,7 +23,7 @@ Have an old ThinkPad from 2005 sitting in the closet? A Sega Dreamcast? A Ninten
 
 ## Get Involved
 Join our community of retro-computing enthusiasts, embedded engineers, and blockchain rebels. 
-- Star the repositories.
+- Read the docs and join the Discord.
 - Boot up a node on your oldest machine.
 - Submit a hardware report.
 - Start earning RTC. 

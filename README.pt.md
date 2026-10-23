@@ -44,7 +44,9 @@ Comente no issue: **"Eu gostaria de trabalhar nisso"**
 ### 3. Envie seu Trabalho
 - **Recompensas de código**: Abra um PR para o repositório relevante e vincule-o no issue
 - **Recompensas de conteúdo**: Poste seu conteúdo e vincule-o no issue
-- **Recompensas de estrelas/propagação**: Siga as instruções no issue
+- **Recompensas de propagação**: Siga as instruções no issue
+
+> **Nunca pagamos por estrelas, forks, watches ou follows.** As Políticas de Uso Aceitável do GitHub proíbem isso; RTC é pago apenas por trabalho real e revisado.
 
 ### 4. Receba seu Pagamento
 Após verificação, o RTC é enviado para sua carteira. Primeiro? Nós o ajudaremos a configurar uma.
@@ -55,7 +57,7 @@ Após verificação, o RTC é enviado para sua carteira. Primeiro? Nós o ajudar
 
 | Categoria      | Exemplos                          | Contagem |
 |----------------|-----------------------------------|----------|
-| **Comunidade** | Estrelar repositórios, compartilhar conteúdo, recrutar contribuidores | 30+ |
+| **Comunidade** | Compartilhar conteúdo, recrutar contribuidores, ajudar novatos | 30+ |
 | **Código**     | Correção de bugs, recursos, integrações, testes | 40+ |
 | **Conteúdo**   | Tutoriais, artigos, vídeos, documentação | 20+ |
 | **Time de Ataque** | Auditoria de segurança, testes de invasão, busca por exploits | 6 |
@@ -66,7 +68,6 @@ Após verificação, o RTC é enviado para sua carteira. Primeiro? Nós o ajudar
 
 | Recompensa                          | Recompensa | Dificuldade |
 |-------------------------------------|------------|-------------|
-| [RustChain para 500 Estrelas](https://github.com/Scottcjn/rustchain-bounties/issues/553) | 150 RTC pool | Fácil |
 | [Dual-Mining: Integração Warthog](https://github.com/Scottcjn/rustchain-bounties/issues/550) | 25 RTC | Maior |
 | [Time de Ataque de Integridade do Ledger](https://github.com/Scottcjn/rustchain-bounties/issues/491) | 200 RTC | Crítico |
 | [Time de Ataque de Consenso](https://github.com/Scottcjn/rustchain-bounties/issues/493) | 200 RTC | Crítico |

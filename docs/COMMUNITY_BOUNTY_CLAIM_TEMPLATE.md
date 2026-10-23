@@ -2,17 +2,15 @@
 
 Use this template when claiming rewards from the community support bounty.
 
+> Stars, forks, watches and follows are never rewarded (GitHub Acceptable Use Policies).
+
 ## Claim Message Template
 
 ```markdown
 Wallet: <your RTC wallet>
 
 Actions completed:
-1) Starred Scottcjn/Rustchain (2 RTC)
-   Proof: <profile or screenshot link>
-2) Starred Scottcjn/bottube (2 RTC)
-   Proof: <profile or screenshot link>
-3) Joined Discord (3 RTC)
+1) Joined Discord (3 RTC)
    Proof: <discord username>
 
 Total requested: <N> RTC
@@ -27,6 +25,5 @@ Total requested: <N> RTC
 
 ## Maintainer Review Notes
 
-- Verify stargazer actions directly in GitHub stargazer lists
 - Prefer plain links over cropped screenshots where possible
 - Mark partial approvals clearly when only some proofs pass
